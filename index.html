@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
+    <title>Main Index</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -92,6 +92,18 @@
             cursor: pointer;
             transform: scale(1.2);
         }
+        input {
+            caret-color: var(--accentColor);
+            caret-shape: block;
+        }
+        ::spelling-error,
+        ::grammar-error {
+            text-decoration: wavy var(--accentColor) underline;
+        }
+        ::selection {
+            color: var(--textColor);
+            background-color: var(--accentColor);
+        }
         #colorButtonContainer.hidden {
             display: none;
         }
@@ -107,12 +119,10 @@
 <body>
     <header>
         <button>Tasks</button>
-        <h1>
-            Weather
-        </h1>
+        <button id="weatherPageButton">Weather</button>
         <button>Calendar</button>
     </header>
-    <main>
+    <main id="mainContent">
     </main>
     <footer>
         <i id="palletButton" class="fa-solid fa-palette"></i>
@@ -171,5 +181,6 @@
         }
     }
 </script>
+    <script src="script-index.js"></script>
 </body>
 </html>

@@ -1,17 +1,12 @@
-const root = document.documentElement
 const pinIcon = document.getElementById("pinIcon")
 const searchForm = document.getElementById("searchForm")
 const searchInput = document.getElementById("searchInput")
 const setButton = document.getElementById("setButton")
 const weatherButton = document.querySelectorAll(".weatherButton")
 const forecastDay = document.querySelectorAll(".forecastDay")
-const body = document.querySelector("body")
 const cityDisplay = document.getElementById("cityDisplay")
 const temp = document.querySelectorAll(".temp")
 const popContainer = document.querySelectorAll(".popContainer")
-const colorButtonContainer = document.querySelector("#colorButtonContainer")
-const colorButtons = colorButtonContainer.querySelectorAll("button")
-const palletButton = document.querySelector("#palletButton")
 
 var dailySummary = []
 var responseForecast = ""
@@ -132,15 +127,6 @@ searchInput.addEventListener("keydown", (event) => {
         event.preventDefault()
         setLocation()
     }
-})
-palletButton.addEventListener("click", (event) => {
-    hideShow(event.target, colorButtonContainer)
-})
-colorButtons.forEach(button => {
-    button.addEventListener("click", (event) => {
-        changeColorScheme(event)
-        hideShow(event.target.parentElement, palletButton)
-    })
 })
 
 //FUNCTIONS
@@ -288,35 +274,4 @@ function descaleParent(event) {
             event.target.parentElement.querySelector(".popContainer").style.visibility = "hidden"
         }
     })
-}
-function hideShow(swap1, swap2) {
-    swap1.classList.toggle("hidden")
-    swap2.classList.toggle("hidden")
-}
-function changeColorScheme(event) {
-    console.log("change color scheme function called")
-    console.log(event.target.id)
-    switch(event.target.id) {
-        case "daySchemeButton":
-            root.style.setProperty("--mainColor", "rgb(255, 255, 255)")
-            root.style.setProperty("--accentColor", "rgb(236, 172, 75)")
-            root.style.setProperty("--textColor", "rgb(0, 0, 0)")
-            console.log("changed to day colorScheme")
-            break;
-        case "nightSchemeButton":
-            root.style.setProperty("--mainColor", "rgb(0, 0, 0)")
-            root.style.setProperty("--accentColor", "rgb(198, 103, 88)")
-            root.style.setProperty("--textColor", "rgb(255, 255, 255)")
-            break;
-        case "monetSchemeButton":
-            root.style.setProperty("--mainColor", "rgb(171, 203, 204)")
-            root.style.setProperty("--accentColor", "rgb(255, 255, 255)")
-            root.style.setProperty("--textColor", "rgb(138, 96, 118)")
-            break;
-        case "vangoghSchemeButton":
-            root.style.setProperty("--mainColor", "rgb(40, 40, 90)")
-            root.style.setProperty("--accentColor", "rgb(229, 192, 98)")
-            root.style.setProperty("--textColor", "rgb(243, 237, 191)")
-            break;
-    }
 }

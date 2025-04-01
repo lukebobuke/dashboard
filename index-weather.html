@@ -12,35 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        :root {
-            --mainColor: rgb(0, 0, 0);
-            --accentColor: rgb(198, 103, 88);
-            --textColor: rgb(255, 255, 255);
-            --borderRadius: 8px;
-            --borderWidth: 3px;
-            --headerFooterHeight: 4rem;
-        }
-        * {
-            margin: 0rem;
-            padding: 0rem;
-            font-family: "roboto", sans-serif;
-            color: var(--textColor);
-            box-sizing: border-box;
-            /* transition-duration: 300ms; */
-            transition: 300ms ease;
-        }
-        input {
-            caret-color: var(--accentColor);
-            caret-shape: block;
-        }
-        ::spelling-error,
-        ::grammar-error {
-            text-decoration: wavy var(--accentColor) underline;
-        }
-        ::selection {
-            color: var(--textColor);
-            background-color: var(--accentColor);
-        }
         body {
             display: flex;
             flex-direction: column;
@@ -53,24 +24,6 @@
             width: 100vw;
             align-items: center;
         }
-        header {
-            display: flex;
-            height: var(--headerFooterHeight);
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            background-color: var(--textColor);
-        }
-        header h1 {
-            font-size: 3rem;
-            color: var(--mainColor);
-            padding: 2rem;
-        }
-        header i,
-        footer i {
-            color: var(--mainColor);
-            font-size: 2rem;
-        }
         main {
             display: flex;
             flex-direction: column;
@@ -78,47 +31,11 @@
             align-items: center;
             justify-content: space-evenly;
         }
-        footer {
-            display: flex;
-            height: var(--headerFooterHeight);
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            background-color: var(--textColor);
-        }
         div {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1rem;
-        }
-        button {
-            width: 6rem;
-            border: none;
-            background-color: transparent;
-            color: var(--mainColor);
-            font-size: 1.2rem;
-            border-radius: .2rem;
-        }
-        button:hover {
-            background-color: var(--mainColor);
-            color: var(--accentColor);
-            cursor: pointer;
-        }
-        i {
-            color: var(--textColor);
-        }
-        i:hover {
-            color: var(--accentColor);
-            cursor: pointer;
-            transform: scale(1.2);
-        }
-        footer {
-            display: flex;
-            height: var(--headerFooterHeight);
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
         }
         #pinIcon {
             font-size: 2rem;
@@ -209,19 +126,9 @@
             display: flex;
             flex-direction: row;
         }
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <header>
-        <button>Tasks</button>
-        <h1>
-            Weather
-        </h1>
-        <button>Calendar</button>
-    </header>
     <main>
         <div id="pinIconContainer">
             <i id="pinIcon" class="show fa-solid fa-location-dot"></i>
@@ -279,15 +186,6 @@
             </div>
         </div>
     </main>
-    <footer>
-        <i id="palletButton" class="fa-solid fa-palette"></i>
-        <div id="colorButtonContainer" class="hidden">
-            <button id="daySchemeButton">day</button>
-            <button id="nightSchemeButton">night</button>
-            <button id="monetSchemeButton">monet</button>
-            <button id="vangoghSchemeButton">van gogh</button>
-        </div>
-    </footer>
     <script src="script-weather.js"></script>
 </body>
 </html>
