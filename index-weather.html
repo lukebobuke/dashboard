@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --mainColor: rgb(0, 0, 0);
+            --accentColor: rgb(198, 103, 88);
+            --textColor: rgb(255, 255, 255);
+            --borderRadius: 8px;
+            --borderWidth: 3px;
+            --headerFooterHeight: 4rem;
+        }
+        * {
+            margin: 0rem;
+            padding: 0rem;
+            font-family: "roboto", sans-serif;
+            color: var(--textColor);
+            box-sizing: border-box;
+            /* transition-duration: 300ms; */
+            transition: 300ms ease;
+        }
+        input {
+            caret-color: var(--accentColor);
+            caret-shape: block;
+        }
+        ::spelling-error,
+        ::grammar-error {
+            text-decoration: wavy var(--accentColor) underline;
+        }
+        ::selection {
+            color: var(--textColor);
+            background-color: var(--accentColor);
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            /* position: relative; */
+            /* gap: 2rem; */
+            height: 100vh;
+            background-color: var(--mainColor);
+            margin: 0 auto;
+            max-width: 400px;
+            width: 100vw;
+            align-items: center;
+        }
+        header {
+            display: flex;
+            height: var(--headerFooterHeight);
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            background-color: var(--textColor);
+        }
+        header h1 {
+            font-size: 3rem;
+            color: var(--mainColor);
+            padding: 2rem;
+        }
+        header i,
+        footer i {
+            color: var(--mainColor);
+            font-size: 2rem;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        footer {
+            display: flex;
+            height: var(--headerFooterHeight);
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            background-color: var(--textColor);
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        button {
+            width: 6rem;
+            border: none;
+            background-color: transparent;
+            color: var(--mainColor);
+            font-size: 1.2rem;
+            border-radius: .2rem;
+        }
+        button:hover {
+            background-color: var(--mainColor);
+            color: var(--accentColor);
+            cursor: pointer;
+        }
+        i {
+            color: var(--textColor);
+        }
+        i:hover {
+            color: var(--accentColor);
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        footer {
+            display: flex;
+            height: var(--headerFooterHeight);
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+        }
+        #pinIcon {
+            font-size: 2rem;
+        }
+        #searchForm {
+            display: none;
+            width: 0;
+            transition: width 750ms ease-in-out;
+            flex-direction: row;
+            height: 3rem;
+            border-style: solid;
+            border-width: var(--borderWidth);
+            border-radius: var(--borderRadius);
+            border-color: var(--accentColor);
+            overflow: hidden;
+        }
+        #searchInput {
+            flex: 1;
+            border: none;
+            padding-left: .5rem;
+            padding-right: .5rem;
+            min-width: 0px;
+            background-color: transparent;
+            color: var(--accentColor);
+            outline: none;
+            font-size: 1.5rem;
+        }
+        #searchInput::placeholder {
+            color: var(--accentColor);
+            opacity: 50%;
+        }
+        #setButton {
+            display: none;
+            color: var(--accentColor);
+        }
+        #setButton:hover {
+            color: var(--mainColor);
+            background-color: var(--accentColor);
+        }
+        #weatherNow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            font-size: 2rem;
+            transition: transform 1000ms ease;
+        }
+        #now {
+            font-weight: bold;
+        }
+        #weatherNow i {
+            font-size: 3rem;
+        }
+        #weatherFiveDay {
+            display: flex;
+            flex-direction: row;
+            gap: 2.5rem;
+        }
+        #weatherFiveDay > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            transition: transform 1000ms ease;
+        }
+        .weatherButton {
+            font-size: 1.5rem;
+        }
+        .day {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .popIcon {
+            font-size: 1rem;
+        }
+        .popContainer {
+            display: flex;
+            flex-direction: row;
+            gap: .25rem;
+        }
+        .popContainer * {
+            font-size: .75rem;
+        }
+        #colorButtonContainer.hidden {
+            display: none;
+        }
+        #colorButtonContainer {
+            display: flex;
+            flex-direction: row;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button>Tasks</button>
+        <h1>
+            Weather
+        </h1>
+        <button>Calendar</button>
+    </header>
+    <main>
+        <div id="pinIconContainer">
+            <i id="pinIcon" class="show fa-solid fa-location-dot"></i>
+            <p id = "cityDisplay">City failed to Load</p>
+        </div>
+        <form id="searchForm" class = "hide">
+            <input id="searchInput" placeholder="enter city">
+            <button id="setButton" type="button">
+                SET
+            </button>
+        </form>
+        <div id = "weatherNow">
+            <p id="now">NOW</p>
+            <i class="weatherButton fa-solid fa-sun" tabindex="0"></i>
+            <p id="nowTemp">_</p>
+        </div>
+        <!-- <div id = "weatherHourly">
+        </div> -->
+        <div id = "weatherFiveDay">
+            <div id = "dayOne" class = "forecastDay">
+                <p class="dayName">M</p>
+                <i class="weatherButton fa-solid fa-sun" tabindex="0"></i>
+                <p class="temp">65°</p>
+                <div class="popContainer">
+                    <i class="popIcon fa-solid fa-droplet"></i>
+                    <p class="pop">25%</p>
+                </div>
+            </div>
+            <div id = "dayTwo" class = "forecastDay">
+                <p class="dayName">T</p>
+                <i class="weatherButton fa-solid fa-cloud-sun" tabindex="0"></i>
+                <p class="temp">65°</p>
+                <div class="popContainer">
+                    <i class="popIcon fa-solid fa-droplet"></i>
+                    <p class="pop">25%</p>
+                </div>
+            </div>
+            <div id = "dayThree" class = "forecastDay">
+                <p class="dayName">W</p>
+                <i class="weatherButton fa-solid fa-cloud" tabindex="0"></i>
+                <p class="temp">65°</p>
+                <div class="popContainer">
+                    <i class="popIcon fa-solid fa-droplet"></i>
+                    <p class="pop">25%</p>
+                </div>
+            </div>
+            <div id = "dayFour" class = "forecastDay">
+                <p class="dayName">R</p>
+                <i class="weatherButton fa-solid fa-cloud-showers-heavy" tabindex="0"></i>
+                <p class="temp">65°</p>
+                <div class="popContainer">
+                    <i class="popIcon fa-solid fa-droplet"></i>
+                    <p class="pop">25%</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <i id="palletButton" class="fa-solid fa-palette"></i>
+        <div id="colorButtonContainer" class="hidden">
+            <button id="daySchemeButton">day</button>
+            <button id="nightSchemeButton">night</button>
+            <button id="monetSchemeButton">monet</button>
+            <button id="vangoghSchemeButton">van gogh</button>
+        </div>
+    </footer>
+<script>
+    const root = document.documentElement
+    const pinIcon = document.getElementById("pinIcon")
+    const searchForm = document.getElementById("searchForm")
+    const searchInput = document.getElementById("searchInput")
+    const setButton = document.getElementById("setButton")
+    const weatherButton = document.querySelectorAll(".weatherButton")
+    const forecastDay = document.querySelectorAll(".forecastDay")
+    const body = document.querySelector("body")
+    const cityDisplay = document.getElementById("cityDisplay")
+    const temp = document.querySelectorAll(".temp")
+    const popContainer = document.querySelectorAll(".popContainer")
+    const colorButtonContainer = document.querySelector("#colorButtonContainer")
+    const colorButtons = colorButtonContainer.querySelectorAll("button")
+    const palletButton = document.querySelector("#palletButton")
+
+    var dailySummary = []
+    var responseForecast = ""
+    var dataForecast = ""
+    var forecastArray = []
+    var dataNow = []
+
+    forecastDay.forEach(day => {
+        day.querySelector(".temp").style.visibility = "hidden"
+        day.querySelector(".popContainer").style.visibility = "hidden"
+    })
+
+    
+    var city = "Chicago"
+    cityDisplay.innerText = city
+    const apiKey = "b310682931bcc24d7e4a32363c54e44d"
+    
+    async function checkWeather() {
+        const apiURLNow = `https://api.openweathermap.org/data/2.5/weather?units=imperial&q=${city}&appid=${apiKey}`
+        const apiURLForecast = `https://api.openweathermap.org/data/2.5/forecast?units=imperial&q=${city}&appid=${apiKey}`
+        
+        const responseNow = await fetch(apiURLNow)
+        if (!responseNow.ok) {
+            console.log("Error fetching current weather data")
+            cityDisplay.innerText = "City not found"
+            return
+        }
+        const dataNow = await responseNow.json()
+
+        document.querySelector("#nowTemp").innerHTML = `${Math.round(dataNow.main.temp)}°`
+        displayIcons(dataNow.weather[0].icon, weatherNow)
+
+        const responseForecast = await fetch(apiURLForecast)
+        if (!responseForecast.ok) {
+            console.log("Error fetching forecast data")
+            cityDisplay.innerText = "City not found"
+            return
+        }
+        dataForecast = await responseForecast.json()
+        console.log("Check weather function called for city:" + city)
+        createSummary()
+    }
+    checkWeather()
+    function createSummary(){
+        forecastArray = []
+        dailySummary = []
+        dataForecast.list.forEach(item => {
+            const date = item.dt_txt.split(" ")[0]
+            const time = item.dt_txt.split(" ")[1]
+            var hourObject = {time: time, temperature: item.main.temp, icon: item.weather[0].icon, pop: item.pop * 100}
+                if (!forecastArray[date]) {
+                forecastArray[date] = []
+            }
+            forecastArray[date].push(hourObject)
+        })
+            var temps = []
+            dailySummary = Object.keys(forecastArray).map(date => {
+                var temps = []
+                forecastArray[date].forEach(item => {
+                    temps.push(item.temperature)
+                })
+                var pops = []
+                forecastArray[date].forEach(item => {
+                    pops.push(item.pop)
+                })
+                var dayHour = forecastArray[date].find(item => item.time === "12:00:00")
+                dayHour ? dayIcon = dayHour.icon : dayIcon = undefined
+                return {
+                    date,
+                    highestTemp: Math.max(...temps),
+                    lowestTemp: Math.min(...temps),
+                    dayIcon,
+                    highestPop: Math.max(...pops)
+                }
+            })
+        
+        console.log(forecastArray)
+        console.log(dailySummary)
+        displayTemps(dailySummary, dayOne, 1)
+        displayTemps(dailySummary, dayTwo, 2)
+        displayTemps(dailySummary, dayThree, 3)
+        displayTemps(dailySummary, dayFour, 4)
+        displayIcons(dailySummary[1].dayIcon, dayOne)
+        displayIcons(dailySummary[2].dayIcon, dayTwo)
+        displayIcons(dailySummary[3].dayIcon, dayThree)
+        displayIcons(dailySummary[4].dayIcon, dayFour)
+        displayWeekDay(dailySummary[1].date, dayOne)
+        displayWeekDay(dailySummary[2].date, dayTwo)
+        displayWeekDay(dailySummary[3].date, dayThree)
+        displayWeekDay(dailySummary[4].date, dayFour)
+        displayPop(dailySummary[1].highestPop, dayOne)
+        displayPop(dailySummary[2].highestPop, dayTwo)
+        displayPop(dailySummary[3].highestPop, dayThree)
+        displayPop(dailySummary[4].highestPop, dayFour)
+    }
+    
+    // EVENT LISTENERS
+    
+    pinIcon.addEventListener("click", (event) => {
+        expandLocation()
+    })
+    weatherButton.forEach(button => {
+        button.addEventListener("focus", function(event) {
+            scaleParent(event)
+        })
+    })
+    weatherButton.forEach(button => {
+        button.addEventListener("blur", function(event) {
+            descaleParent(event)
+        })
+    })
+    setButton.addEventListener("click", (event) => {
+        event.preventDefault()
+        setLocation()
+    })
+    searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault()
+            setLocation()
+        }
+    })
+    palletButton.addEventListener("click", (event) => {
+        hideShow(event.target, colorButtonContainer)
+    })
+    colorButtons.forEach(button => {
+        button.addEventListener("click", (event) => {
+            changeColorScheme(event)
+            hideShow(event.target.parentElement, palletButton)
+        })
+    })
+
+    //FUNCTIONS
+    function displayIcons(iconKey, id) {
+        id.querySelector("i").className = ""
+        switch (iconKey) {
+            case "01d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-sun";
+                break;
+            case "02d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-sun";
+                break;
+            case "03d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                break;
+            case "04d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                break;
+            case "09d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                break;
+            case "10d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                break;
+            case "11d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                break; 
+            case "13d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-snowflake";
+                break;  
+            case "50d": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                break;     
+            case "01n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-moon";
+                break;
+            case "02n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-moon";
+                break;
+            case "03n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                break;
+            case "04n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                break;
+            case "09n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                break;
+            case "10n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                break;
+            case "11n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                break; 
+            case "13n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-snowflake";
+                break;  
+            case "50n": 
+                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                break;  
+            
+        }
+    }
+    function displayTemps(array, id, index) {
+        id.querySelector(".temp").innerText = (Math.round(array[index].highestTemp) + "°/" + Math.round(array[index].lowestTemp) + "°")
+    }
+    function displayWeekDay(date, id) {
+        var offDate = new Date(date)
+        var formattedDate = new Date(Date.UTC(offDate.getUTCFullYear(), offDate.getUTCMonth(),
+        offDate.getUTCDate(), offDate.getUTCHours(),
+        offDate.getUTCMinutes(), offDate.getUTCSeconds()))
+        var dayNumber = formattedDate.getUTCDay()
+        var dayString = ""
+        switch(dayNumber) {
+            case 0:
+                dayString = "Sun"
+                break
+            case 1:
+                dayString = "Mon"
+                break
+            case 2:
+                dayString = "Tue"
+                break
+            case 3:
+                dayString = "Wed"
+                break
+            case 4:
+                dayString = "Thu"
+                break
+            case 5:
+                dayString = "Fri"
+                break
+            case 6:
+                dayString = "Sat"
+                break
+        }
+        id.querySelector(".dayName").innerText = dayString
+
+    }
+    function displayPop(pop, id) {
+        id.querySelector(".pop").innerText = pop + "%"
+    }
+    function expandLocation() {
+        pinIconContainer.style.display = "none"
+        searchForm.style.display = "flex"
+        requestAnimationFrame(() => {
+            searchForm.style.width = "100%";
+        });
+        setTimeout(() => {
+            setButton.style.display = "block";
+        }, 750);
+        searchInput.focus()
+    }
+    function setLocation() {
+        city = searchInput.value
+        cityDisplay.innerText = city
+        checkWeather()
+        console.log(city)
+        searchForm.style.display = "none"
+        searchForm.style.width = 0
+        setButton.style.display = "none"
+        pinIconContainer.style.display = "flex"
+    }
+    function scaleParent(event) {
+        event.target.focus()
+        console.log("scale function called")
+        requestAnimationFrame(() => {
+            event.target.parentElement.style.transform = "scale(1.5)"
+            if (event.target.parentElement.querySelector(".temp")) {
+                event.target.parentElement.querySelector(".temp").style.visibility = "visible"
+            }
+            if (event.target.parentElement.querySelector(".popContainer")) {
+                event.target.parentElement.querySelector(".popContainer").style.visibility = "visible"
+            }
+        })
+    }
+    function descaleParent(event) {
+        console.log("descale function called")
+        requestAnimationFrame(() => {
+            event.target.parentElement.style.transform = "scale(1)"
+            if (event.target.parentElement.querySelector(".temp")) {
+                event.target.parentElement.querySelector(".temp").style.visibility = "hidden"
+            }
+            if (event.target.parentElement.querySelector(".popContainer")) {
+                event.target.parentElement.querySelector(".popContainer").style.visibility = "hidden"
+            }
+        })
+    }
+    function hideShow(swap1, swap2) {
+        swap1.classList.toggle("hidden")
+        swap2.classList.toggle("hidden")
+    }
+    function changeColorScheme(event) {
+        console.log("change color scheme function called")
+        console.log(event.target.id)
+        switch(event.target.id) {
+            case "daySchemeButton":
+                root.style.setProperty("--mainColor", "rgb(255, 255, 255)")
+                root.style.setProperty("--accentColor", "rgb(236, 172, 75)")
+                root.style.setProperty("--textColor", "rgb(0, 0, 0)")
+                console.log("changed to day colorScheme")
+                break;
+            case "nightSchemeButton":
+                root.style.setProperty("--mainColor", "rgb(0, 0, 0)")
+                root.style.setProperty("--accentColor", "rgb(198, 103, 88)")
+                root.style.setProperty("--textColor", "rgb(255, 255, 255)")
+                break;
+            case "monetSchemeButton":
+                root.style.setProperty("--mainColor", "rgb(171, 203, 204)")
+                root.style.setProperty("--accentColor", "rgb(255, 255, 255)")
+                root.style.setProperty("--textColor", "rgb(138, 96, 118)")
+                break;
+            case "vangoghSchemeButton":
+                root.style.setProperty("--mainColor", "rgb(40, 40, 90)")
+                root.style.setProperty("--accentColor", "rgb(229, 192, 98)")
+                root.style.setProperty("--textColor", "rgb(243, 237, 191)")
+                break;
+        }
+    }
+</script>
+</body>
+</html>
