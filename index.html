@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --mainColor: rgb(0, 0, 0);
+            --accentColor: rgb(198, 103, 88);
+            --textColor: rgb(255, 255, 255);
+            --borderRadius: 8px;
+            --borderWidth: 3px;
+            --headerFooterHeight: 4rem;
+        }
+        * {
+            margin: 0rem;
+            padding: 0rem;
+            font-family: "roboto", sans-serif;
+            color: var(--textColor);
+            box-sizing: border-box;
+            transition: 300ms ease;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: var(--mainColor);
+            margin: 0 auto;
+            max-width: 400px;
+            width: 100vw;
+            align-items: center;
+        }
+        header {
+            display: flex;
+            height: var(--headerFooterHeight);
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            background-color: var(--textColor);
+        }
+        header h1 {
+            font-size: 3rem;
+            color: var(--mainColor);
+            padding: 2rem;
+        }
+        header i,
+        footer i {
+            color: var(--mainColor);
+            font-size: 2rem;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        footer {
+            display: flex;
+            height: var(--headerFooterHeight);
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            background-color: var(--textColor);
+        }
+        button {
+            width: 6rem;
+            border: none;
+            background-color: transparent;
+            color: var(--mainColor);
+            font-size: 1.2rem;
+            border-radius: .2rem;
+        }
+        button:hover {
+            background-color: var(--mainColor);
+            color: var(--accentColor);
+            cursor: pointer;
+        }
+        i {
+            color: var(--textColor);
+        }
+        i:hover {
+            color: var(--accentColor);
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        #colorButtonContainer.hidden {
+            display: none;
+        }
+        #colorButtonContainer {
+            display: flex;
+            flex-direction: row;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button>Tasks</button>
+        <h1>
+            Weather
+        </h1>
+        <button>Calendar</button>
+    </header>
+    <main>
+    </main>
+    <footer>
+        <i id="palletButton" class="fa-solid fa-palette"></i>
+        <div id="colorButtonContainer" class="hidden">
+            <button id="daySchemeButton">day</button>
+            <button id="nightSchemeButton">night</button>
+            <button id="monetSchemeButton">monet</button>
+            <button id="vangoghSchemeButton">van gogh</button>
+        </div>
+    </footer>
+<script>
+    const root = document.documentElement
+    const body = document.querySelector("body")
+    const palletButton = document.getElementById("palletButton");
+    const colorButtonContainer = document.getElementById("colorButtonContainer");
+    const colorButtons = colorButtonContainer.querySelectorAll("button")
+
+    palletButton.addEventListener("click", (event) => {
+        hideShow(event.target, colorButtonContainer)
+    })
+    colorButtons.forEach(button => {
+        button.addEventListener("click", (event) => {
+            changeColorScheme(event)
+            hideShow(event.target.parentElement, palletButton)
+        })
+    })
+    function hideShow(swap1, swap2) {
+        swap1.classList.toggle("hidden")
+        swap2.classList.toggle("hidden")
+    }
+    function changeColorScheme(event) {
+        console.log("change color scheme function called")
+        console.log(event.target.id)
+        switch(event.target.id) {
+            case "daySchemeButton":
+                root.style.setProperty("--mainColor", "rgb(255, 255, 255)")
+                root.style.setProperty("--accentColor", "rgb(236, 172, 75)")
+                root.style.setProperty("--textColor", "rgb(0, 0, 0)")
+                console.log("changed to day colorScheme")
+                break;
+            case "nightSchemeButton":
+                root.style.setProperty("--mainColor", "rgb(0, 0, 0)")
+                root.style.setProperty("--accentColor", "rgb(198, 103, 88)")
+                root.style.setProperty("--textColor", "rgb(255, 255, 255)")
+                break;
+            case "monetSchemeButton":
+                root.style.setProperty("--mainColor", "rgb(171, 203, 204)")
+                root.style.setProperty("--accentColor", "rgb(255, 255, 255)")
+                root.style.setProperty("--textColor", "rgb(138, 96, 118)")
+                break;
+            case "vangoghSchemeButton":
+                root.style.setProperty("--mainColor", "rgb(40, 40, 90)")
+                root.style.setProperty("--accentColor", "rgb(229, 192, 98)")
+                root.style.setProperty("--textColor", "rgb(243, 237, 191)")
+                break;
+        }
+    }
+</script>
+</body>
+</html>
