@@ -12,44 +12,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        body {
+        #topContainer {
             display: flex;
-            flex-direction: column;
-            /* position: relative; */
-            /* gap: 2rem; */
-            height: 100vh;
-            background-color: var(--mainColor);
-            margin: 0 auto;
-            max-width: 400px;
-            width: 100vw;
-            align-items: center;
-        }
-        main {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            align-items: center;
-            justify-content: space-evenly;
-        }
-        div {
-            display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             gap: 1rem;
-        }
+            position: relative;
+        } 
         #pinIcon {
             font-size: 2rem;
+            /* position: absolute; */
+        }
+        #cityDisplay {
+            text-transform: uppercase;
         }
         #searchForm {
             display: none;
             width: 0;
             transition: width 750ms ease-in-out;
             flex-direction: row;
-            height: 3rem;
+            height: 4rem;
             border-style: solid;
             border-width: var(--borderWidth);
-            border-radius: var(--borderRadius);
             border-color: var(--accentColor);
+            border-radius: var(--borderRadius);
             overflow: hidden;
         }
         #searchInput {
@@ -63,28 +49,21 @@
             outline: none;
             font-size: 1.5rem;
         }
-        #searchInput::placeholder {
-            color: var(--accentColor);
-            opacity: 50%;
-        }
         #setButton {
             display: none;
-            color: var(--accentColor);
-        }
-        #setButton:hover {
-            color: var(--mainColor);
-            background-color: var(--accentColor);
         }
         #weatherNow {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: .5rem;
-            font-size: 2rem;
+            font-size: 1.5rem;
             transition: transform 1000ms ease;
-        }
-        #now {
-            font-weight: bold;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: solid;
+            border-radius: var(--borderRadius);
+            border-width: var(--borderWidth);
         }
         #weatherNow i {
             font-size: 3rem;
@@ -92,17 +71,29 @@
         #weatherFiveDay {
             display: flex;
             flex-direction: row;
-            gap: 2.5rem;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem;
+            border: solid;
+            border-radius: var(--borderRadius);
+            border-width: var(--borderWidth);
         }
         #weatherFiveDay > div {
             display: flex;
             flex-direction: column;
+            flex: 1;
             align-items: center;
-            gap: .5rem;
+            gap: .75rem;
             transition: transform 1000ms ease;
         }
         .weatherButton {
-            font-size: 1.5rem;
+            font-size: 2rem;
+        }
+        .weatherButton:hover {
+            cursor: unset;
+            transform: unset;
+            color: unset;
         }
         .day {
             font-weight: bold;
@@ -119,29 +110,20 @@
         .popContainer * {
             font-size: .75rem;
         }
-        #colorButtonContainer.hidden {
-            display: none;
-        }
-        #colorButtonContainer {
-            display: flex;
-            flex-direction: row;
-        }
     </style>
 </head>
 <body>
     <main>
-        <div id="pinIconContainer">
+        <div id="topContainer">
             <i id="pinIcon" class="show fa-solid fa-location-dot"></i>
-            <p id = "cityDisplay">City failed to Load</p>
+            <h2 id = "cityDisplay">City failed to Load</h2>
+            <form id="searchForm" class = "hide">
+                <input id="searchInput" placeholder="enter city">
+                <button id="setButton" type="button">SET</button>
+            </form>
         </div>
-        <form id="searchForm" class = "hide">
-            <input id="searchInput" placeholder="enter city">
-            <button id="setButton" type="button">
-                SET
-            </button>
-        </form>
         <div id = "weatherNow">
-            <p id="now">NOW</p>
+            <p>NOW</p>
             <i class="weatherButton fa-solid fa-sun" tabindex="0"></i>
             <p id="nowTemp">_</p>
         </div>

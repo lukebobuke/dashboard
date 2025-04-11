@@ -1,3 +1,8 @@
+weatherScript();
+function weatherScript() {
+
+
+
 const pinIcon = document.getElementById("pinIcon")
 const searchForm = document.getElementById("searchForm")
 const searchInput = document.getElementById("searchInput")
@@ -8,19 +13,19 @@ const cityDisplay = document.getElementById("cityDisplay")
 const temp = document.querySelectorAll(".temp")
 const popContainer = document.querySelectorAll(".popContainer")
 
-var dailySummary = []
-var responseForecast = ""
-var dataForecast = ""
-var forecastArray = []
-var dataNow = []
+let dailySummary = []
+let responseForecast = ""
+let dataForecast = ""
+let forecastArray = []
+let dataNow = []
 
-forecastDay.forEach(day => {
-    day.querySelector(".temp").style.visibility = "hidden"
-    day.querySelector(".popContainer").style.visibility = "hidden"
-})
+// forecastDay.forEach(day => {
+//     day.querySelector(".temp").style.visibility = "hidden"
+//     day.querySelector(".popContainer").style.visibility = "hidden"
+// })
 
 
-var city = "Chicago"
+let city = "Chicago"
 cityDisplay.innerText = city
 const apiKey = "b310682931bcc24d7e4a32363c54e44d"
 
@@ -56,23 +61,23 @@ function createSummary(){
     dataForecast.list.forEach(item => {
         const date = item.dt_txt.split(" ")[0]
         const time = item.dt_txt.split(" ")[1]
-        var hourObject = {time: time, temperature: item.main.temp, icon: item.weather[0].icon, pop: item.pop * 100}
+        let hourObject = {time: time, temperature: item.main.temp, icon: item.weather[0].icon, pop: item.pop * 100}
             if (!forecastArray[date]) {
             forecastArray[date] = []
         }
         forecastArray[date].push(hourObject)
     })
-        var temps = []
+        let temps = []
         dailySummary = Object.keys(forecastArray).map(date => {
-            var temps = []
+            let temps = []
             forecastArray[date].forEach(item => {
                 temps.push(item.temperature)
             })
-            var pops = []
+            let pops = []
             forecastArray[date].forEach(item => {
                 pops.push(item.pop)
             })
-            var dayHour = forecastArray[date].find(item => item.time === "12:00:00")
+            let dayHour = forecastArray[date].find(item => item.time === "12:00:00")
             dayHour ? dayIcon = dayHour.icon : dayIcon = undefined
             return {
                 date,
@@ -83,8 +88,8 @@ function createSummary(){
             }
         })
     
-    console.log(forecastArray)
-    console.log(dailySummary)
+    // console.log(forecastArray)
+    // console.log(dailySummary)
     displayTemps(dailySummary, dayOne, 1)
     displayTemps(dailySummary, dayTwo, 2)
     displayTemps(dailySummary, dayThree, 3)
@@ -108,16 +113,16 @@ function createSummary(){
 pinIcon.addEventListener("click", (event) => {
     expandLocation()
 })
-weatherButton.forEach(button => {
-    button.addEventListener("focus", function(event) {
-        scaleParent(event)
-    })
-})
-weatherButton.forEach(button => {
-    button.addEventListener("blur", function(event) {
-        descaleParent(event)
-    })
-})
+// weatherButton.forEach(button => {
+//     button.addEventListener("focus", function(event) {
+//         scaleParent(event)
+//     })
+// })
+// weatherButton.forEach(button => {
+//     button.addEventListener("blur", function(event) {
+//         descaleParent(event)
+//     })
+// })
 setButton.addEventListener("click", (event) => {
     event.preventDefault()
     setLocation()
@@ -194,12 +199,12 @@ function displayTemps(array, id, index) {
     id.querySelector(".temp").innerText = (Math.round(array[index].highestTemp) + "°/" + Math.round(array[index].lowestTemp) + "°")
 }
 function displayWeekDay(date, id) {
-    var offDate = new Date(date)
-    var formattedDate = new Date(Date.UTC(offDate.getUTCFullYear(), offDate.getUTCMonth(),
+    let offDate = new Date(date)
+    let formattedDate = new Date(Date.UTC(offDate.getUTCFullYear(), offDate.getUTCMonth(),
     offDate.getUTCDate(), offDate.getUTCHours(),
     offDate.getUTCMinutes(), offDate.getUTCSeconds()))
-    var dayNumber = formattedDate.getUTCDay()
-    var dayString = ""
+    let dayNumber = formattedDate.getUTCDay()
+    let dayString = ""
     switch(dayNumber) {
         case 0:
             dayString = "Sun"
@@ -230,7 +235,8 @@ function displayPop(pop, id) {
     id.querySelector(".pop").innerText = pop + "%"
 }
 function expandLocation() {
-    pinIconContainer.style.display = "none"
+    pinIcon.style.display = "none"
+    cityDisplay.style.display = "none"
     searchForm.style.display = "flex"
     requestAnimationFrame(() => {
         searchForm.style.width = "100%";
@@ -248,11 +254,12 @@ function setLocation() {
     searchForm.style.display = "none"
     searchForm.style.width = 0
     setButton.style.display = "none"
-    pinIconContainer.style.display = "flex"
+    pinIcon.style.display = "block"
+    cityDisplay.style.display = "block"
 }
 function scaleParent(event) {
     event.target.focus()
-    console.log("scale function called")
+    // console.log("scale function called")
     requestAnimationFrame(() => {
         event.target.parentElement.style.transform = "scale(1.5)"
         if (event.target.parentElement.querySelector(".temp")) {
@@ -264,7 +271,7 @@ function scaleParent(event) {
     })
 }
 function descaleParent(event) {
-    console.log("descale function called")
+    // console.log("descale function called")
     requestAnimationFrame(() => {
         event.target.parentElement.style.transform = "scale(1)"
         if (event.target.parentElement.querySelector(".temp")) {
@@ -274,4 +281,6 @@ function descaleParent(event) {
             event.target.parentElement.querySelector(".popContainer").style.visibility = "hidden"
         }
     })
+}
+
 }

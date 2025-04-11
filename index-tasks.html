@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #taskPlusButton {
+            font-size: 3rem;
+        }
+        #todoForm {
+            display: none;
+            width: 0;
+            transition: width 750ms ease-in-out;
+            flex-direction: row;
+            height: calc(var(--defaultPadding)*2);
+            border-style: solid;
+            border-width: var(--borderWidth);
+            border-radius: var(--borderRadius);
+            border-color: var(--accentColor);
+            overflow: hidden;
+        }
+        #todoInput {
+            flex: 1;
+            border: none;
+            padding-left: .5rem;
+            padding-right: .5rem;
+            min-width: 0px;
+            background-color: transparent;
+            color: var(--accentColor);
+            outline: none;
+            font-size: 1.5rem;
+        }
+        #addButton {
+            display: none;
+        }
+        #todoList {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 1rem;
+        }
+        .todoItemContainer {
+            display: flex;
+            position: relative;
+            align-items: center;      
+            height: fit-content;  
+            min-height: 3rem;
+        }
+        .checkMark {
+            position: absolute;
+            left: -1.5rem;
+        }
+        .todoItem,
+        .editInput {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            gap: 1rem;
+            font-size: 1rem;
+            border-width: var(--borderWidth);
+            border-style: solid;
+            border-radius: var(--borderRadius);
+            align-items: center;
+            background: transparent;
+            padding-right: 1rem;
+            overflow: hidden;
+            height: 100%;
+        }
+        .todoItem {
+            height: 100%;
+        }
+        .priorityTag {
+            height: 100%;
+            width: 1rem;
+        }
+        .todoText {
+            flex: 1;
+            overflow: hidden;
+        }
+        .priorityTag.unprioritized {
+            background-color: transparent;
+        }
+        .priorityTag.prioritized {
+            background-color: var(--accentColor);
+        }
+        .editInput {
+            padding-left: 2rem;
+            /* width: 100%; */
+            /* field-sizing: inherit; */
+        }
+        .strikethrough {
+            text-decoration: line-through;
+        }
+        i {
+            color: var(--textColor);
+        }
+        i:hover {
+            color: var(--accentColor);
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        .editInput {
+            outline: none;
+            border-style: solid;
+            border-color: var(--accentColor);
+            color: var(--accentColor);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="topContainer">
+            <i id="taskPlusButton" class="show fa-solid fa-plus"></i>
+            <form id="todoForm" class = "hide">
+                <input id="todoInput" placeholder="enter to-do">
+                <button id="addButton" type="text">
+                    ADD
+                </button>
+            </form>
+        </div>
+        <section id="todoList">
+           error: failed to load
+        </section>
+    </main>
+<!-- Link the tasks script -->
+<script src="script-tasks.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Index</title>
+    <title>Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -16,9 +16,11 @@
             --mainColor: rgb(0, 0, 0);
             --accentColor: rgb(198, 103, 88);
             --textColor: rgb(255, 255, 255);
-            --borderRadius: 8px;
-            --borderWidth: 3px;
+            --borderRadius: 12px;
+            --borderWidth: 2px;
             --headerFooterHeight: 4rem;
+            --defaultPadding: 2rem;
+            --topContainerHeight: 8rem;
         }
         * {
             margin: 0rem;
@@ -37,14 +39,22 @@
             max-width: 400px;
             width: 100vw;
             align-items: center;
+            position: relative;
+            /* height: 100%; */
         }
         header {
+            position: fixed;
+            top: 0;
             display: flex;
             height: var(--headerFooterHeight);
             align-items: center;
-            justify-content: center;
+            justify-content: space-evenly;
             width: 100vw;
             background-color: var(--textColor);
+            z-index: 1;
+        }
+        header div button {
+            width: 100%;
         }
         header h1 {
             font-size: 3rem;
@@ -56,28 +66,74 @@
             color: var(--mainColor);
             font-size: 2rem;
         }
+        header button {
+            font-size: 1.3rem;
+            font-weight: bolder;
+        }
+        header button,
+        footer button {
+            width: 6rem;
+            border: none;
+            background-color: transparent;
+            color: var(--mainColor);
+            border-radius: .2rem;
+        }
+        p, 
+        span {
+            font-weight: light;
+        }
+        header button:hover,
+        footer button:hover {
+            background-color: var(--mainColor);
+            color: var(--accentColor);
+            cursor: pointer;
+        }
         main {
             display: flex;
             flex-direction: column;
             flex: 1;
+            justify-content: flex-start;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-top: var(--headerFooterHeight);
+            padding-bottom: var(--headerFooterHeight);
+            width: 100%;
             align-items: center;
-            justify-content: space-evenly;
+        }
+        #topContainer {
+            height: var(--topContainerHeight);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 1rem;
+        }
+        h2 {
+            font-size: 2rem;
+            color: var(--textColor);
+            font-weight: lighter;
+            text-align: center;
         }
         footer {
+            position: fixed;
+            bottom: 0;
             display: flex;
             height: var(--headerFooterHeight);
             align-items: center;
             justify-content: center;
             width: 100vw;
             background-color: var(--textColor);
+            z-index: 1;
         }
         button {
             width: 6rem;
             border: none;
-            background-color: transparent;
+            background-color: var(--accentColor);
             color: var(--mainColor);
             font-size: 1.2rem;
-            border-radius: .2rem;
+            border-radius: 0;
+            text-align: center;
         }
         button:hover {
             background-color: var(--mainColor);
@@ -96,6 +152,19 @@
             caret-color: var(--accentColor);
             caret-shape: block;
         }
+        ::placeholder {
+            color: var(--accentColor);
+            opacity: 50%;
+        }
+        .actions {
+            display: flex;
+            flex-direction: row;
+            height: inherit;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
         ::spelling-error,
         ::grammar-error {
             text-decoration: wavy var(--accentColor) underline;
@@ -112,15 +181,15 @@
             flex-direction: row;
         }
         .hidden {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
 <body>
     <header>
-        <button>Tasks</button>
-        <button id="weatherPageButton">Weather</button>
-        <button>Calendar</button>
+        <div id="taskButtonContainer" style = "order: 1;"><button id="tasksPageButton">Tasks</button></div>
+        <div id="calendarButtonContainer" style = "order: 2;"><button id="calendarPageButton">Calendar</button></div>
+        <div id="weatherButtonContainer" style = "order: 3;"><button id="weatherPageButton">Weather</button></div>
     </header>
     <main id="mainContent">
     </main>
@@ -139,6 +208,11 @@
     const palletButton = document.getElementById("palletButton");
     const colorButtonContainer = document.getElementById("colorButtonContainer");
     const colorButtons = colorButtonContainer.querySelectorAll("button")
+    const footer = document.querySelector("footer")
+    const mainContent = document.getElementById("mainContent")
+    const taskButtonContainer = document.getElementById("taskButtonContainer")
+    const calendarButtonContainer = document.getElementById("calendarButtonContainer")
+    const weatherButtonContainer = document.getElementById("weatherButtonContainer")
 
     palletButton.addEventListener("click", (event) => {
         hideShow(event.target, colorButtonContainer)
@@ -149,9 +223,10 @@
             hideShow(event.target.parentElement, palletButton)
         })
     })
-    function hideShow(swap1, swap2) {
-        swap1.classList.toggle("hidden")
-        swap2.classList.toggle("hidden")
+    function hideShow(...elements) {
+        elements.forEach(element => {
+            element.classList.toggle("hidden");
+        });
     }
     function changeColorScheme(event) {
         console.log("change color scheme function called")
@@ -174,9 +249,9 @@
                 root.style.setProperty("--textColor", "rgb(138, 96, 118)")
                 break;
             case "vangoghSchemeButton":
-                root.style.setProperty("--mainColor", "rgb(40, 40, 90)")
-                root.style.setProperty("--accentColor", "rgb(229, 192, 98)")
-                root.style.setProperty("--textColor", "rgb(243, 237, 191)")
+                root.style.setProperty("--mainColor", "rgb(40, 40, 75)")
+                root.style.setProperty("--accentColor", "rgb(240, 170, 100)")
+                root.style.setProperty("--textColor", "rgb(240, 230, 200)")
                 break;
         }
     }
