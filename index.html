@@ -40,7 +40,6 @@
             width: 100vw;
             align-items: center;
             position: relative;
-            /* height: 100%; */
         }
         header {
             position: fixed;
@@ -48,15 +47,12 @@
             display: flex;
             height: var(--headerFooterHeight);
             align-items: center;
-            justify-content: space-evenly;
+            /* justify-content: space-between; */
             width: 100vw;
             background-color: var(--textColor);
             z-index: 1;
         }
-        header div button {
-            width: 100%;
-        }
-        header h1 {
+        h1 {
             font-size: 3rem;
             color: var(--mainColor);
             padding: 2rem;
@@ -66,17 +62,15 @@
             color: var(--mainColor);
             font-size: 2rem;
         }
-        header button {
-            font-size: 1.3rem;
-            font-weight: bolder;
-        }
         header button,
         footer button {
-            width: 6rem;
+            flex: 1;
             border: none;
             background-color: transparent;
             color: var(--mainColor);
-            border-radius: .2rem;
+            border-radius: var(--borderRadius);
+            font-size: 1.3rem;
+            font-weight: bolder;
         }
         p, 
         span {
@@ -183,13 +177,16 @@
         .hidden {
             display: none !important;
         }
+        #calendarPageButton {
+            font-size: 2rem;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div id="taskButtonContainer" style = "order: 1;"><button id="tasksPageButton">Tasks</button></div>
-        <div id="calendarButtonContainer" style = "order: 2;"><button id="calendarPageButton">Calendar</button></div>
-        <div id="weatherButtonContainer" style = "order: 3;"><button id="weatherPageButton">Weather</button></div>
+        <button style = "order: 1;" id="tasksPageButton">Tasks</button>
+        <button style = "order: 2;" id="calendarPageButton">Calendar</button>
+        <button style = "order: 3;" id="weatherPageButton">Weather</button>
     </header>
     <main id="mainContent">
     </main>
@@ -202,60 +199,6 @@
             <button id="vangoghSchemeButton">van gogh</button>
         </div>
     </footer>
-<script>
-    const root = document.documentElement
-    const body = document.querySelector("body")
-    const palletButton = document.getElementById("palletButton");
-    const colorButtonContainer = document.getElementById("colorButtonContainer");
-    const colorButtons = colorButtonContainer.querySelectorAll("button")
-    const footer = document.querySelector("footer")
-    const mainContent = document.getElementById("mainContent")
-    const taskButtonContainer = document.getElementById("taskButtonContainer")
-    const calendarButtonContainer = document.getElementById("calendarButtonContainer")
-    const weatherButtonContainer = document.getElementById("weatherButtonContainer")
-
-    palletButton.addEventListener("click", (event) => {
-        hideShow(event.target, colorButtonContainer)
-    })
-    colorButtons.forEach(button => {
-        button.addEventListener("click", (event) => {
-            changeColorScheme(event)
-            hideShow(event.target.parentElement, palletButton)
-        })
-    })
-    function hideShow(...elements) {
-        elements.forEach(element => {
-            element.classList.toggle("hidden");
-        });
-    }
-    function changeColorScheme(event) {
-        console.log("change color scheme function called")
-        console.log(event.target.id)
-        switch(event.target.id) {
-            case "daySchemeButton":
-                root.style.setProperty("--mainColor", "rgb(255, 255, 255)")
-                root.style.setProperty("--accentColor", "rgb(236, 172, 75)")
-                root.style.setProperty("--textColor", "rgb(0, 0, 0)")
-                console.log("changed to day colorScheme")
-                break;
-            case "nightSchemeButton":
-                root.style.setProperty("--mainColor", "rgb(0, 0, 0)")
-                root.style.setProperty("--accentColor", "rgb(198, 103, 88)")
-                root.style.setProperty("--textColor", "rgb(255, 255, 255)")
-                break;
-            case "monetSchemeButton":
-                root.style.setProperty("--mainColor", "rgb(171, 203, 204)")
-                root.style.setProperty("--accentColor", "rgb(255, 255, 255)")
-                root.style.setProperty("--textColor", "rgb(138, 96, 118)")
-                break;
-            case "vangoghSchemeButton":
-                root.style.setProperty("--mainColor", "rgb(40, 40, 75)")
-                root.style.setProperty("--accentColor", "rgb(240, 170, 100)")
-                root.style.setProperty("--textColor", "rgb(240, 230, 200)")
-                break;
-        }
-    }
-</script>
     <script src="script-index.js"></script>
 </body>
 </html>

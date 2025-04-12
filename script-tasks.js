@@ -9,10 +9,6 @@ function taskScript() {
     let todoInput = document.getElementById("todoInput")
     let addButton = document.getElementById("addButton")
     let todoList = document.getElementById("todoList")
-    let clearButton = document.getElementById("clearButton")
-    let priorityTag = document.querySelectorAll(".priorityTag")
-    let prioritizeButton = document.querySelectorAll(".prioritizeButton")
-    let removeButton = document.querySelectorAll(".removeButton")
     let todoArray = []
 
     // retrieve local storage of array of to-do items and display

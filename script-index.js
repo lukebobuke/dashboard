@@ -1,11 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
 // Initialize the page with the default content.
+const root = document.documentElement
+const body = document.querySelector("body")
+const mainContent = document.getElementById("mainContent")
 const weatherPageButton = document.getElementById('weatherPageButton')
 const tasksPageButton = document.getElementById('tasksPageButton')
 const calendarPageButton = document.getElementById('calendarPageButton')
-const weatherButtonContainer = document.getElementById('weatherButtonContainer')
-const tasksButtonContainer = document.getElementById('tasksButtonContainer')
-const calendarButtonContainer = document.getElementById('calendarButtonContainer')
+const palletButton = document.getElementById("palletButton");
+const colorButtonContainer = document.getElementById("colorButtonContainer");
+const colorButtons = colorButtonContainer.querySelectorAll("button")
+
+palletButton.addEventListener("click", (event) => {
+    hideShow(event.target, colorButtonContainer)
+})
+colorButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        changeColorScheme(event)
+        hideShow(event.target.parentElement, palletButton)
+    })
+})
+function hideShow(...elements) {
+    elements.forEach(element => {
+        element.classList.toggle("hidden");
+    });
+}
+function changeColorScheme(event) {
+    console.log("change color scheme function called")
+    console.log(event.target.id)
+    switch(event.target.id) {
+        case "daySchemeButton":
+            root.style.setProperty("--mainColor", "rgb(255, 255, 255)")
+            root.style.setProperty("--accentColor", "rgb(236, 172, 75)")
+            root.style.setProperty("--textColor", "rgb(0, 0, 0)")
+            console.log("changed to day colorScheme")
+            break;
+        case "nightSchemeButton":
+            root.style.setProperty("--mainColor", "rgb(0, 0, 0)")
+            root.style.setProperty("--accentColor", "rgb(198, 103, 88)")
+            root.style.setProperty("--textColor", "rgb(255, 255, 255)")
+            break;
+        case "monetSchemeButton":
+            root.style.setProperty("--mainColor", "rgb(189, 225, 226)")
+            root.style.setProperty("--accentColor", "rgb(255, 255, 255)")
+            root.style.setProperty("--textColor", "rgb(164, 116, 141)")
+            break;
+        case "vangoghSchemeButton":
+            root.style.setProperty("--mainColor", "rgb(40, 40, 75)")
+            root.style.setProperty("--accentColor", "rgb(240, 170, 100)")
+            root.style.setProperty("--textColor", "rgb(240, 230, 200)")
+            break;
+    }
+}
 
 loadPage('index-calendar.html', "script-calendar.js", "calendarStyle", "calendarScript");
 // loadPage('index-tasks.html', "script-tasks.js", "tasksStyle", "tasksScript");
@@ -91,9 +136,9 @@ weatherPageButton.addEventListener('click', () => {
     weatherPageButton.style.fontSize = "2rem";
     weatherPageButton.style.transition = "font-size 0.5s ease-in-out";
     
-    calendarButtonContainer.style.order = "1";
-    weatherButtonContainer.style.order = "2";
-    tasksButtonContainer.style.order = "3";
+    calendarPageButton.style.order = "1";
+    weatherPageButton.style.order = "2";
+    tasksPageButton.style.order = "3";
 });
 tasksPageButton.addEventListener('click', () => {
     loadPage('index-tasks.html', "script-tasks.js", "tasksStyle", "tasksScript");
@@ -103,9 +148,9 @@ tasksPageButton.addEventListener('click', () => {
     tasksPageButton.style.fontSize = "2rem";
     tasksPageButton.style.transition = "font-size 0.5s ease-in-out";
     
-    weatherButtonContainer.style.order = "1";
-    tasksButtonContainer.style.order = "2";
-    calendarButtonContainer.style.order = "3";
+    weatherPageButton.style.order = "1";
+    tasksPageButton.style.order = "2";
+    calendarPageButton.style.order = "3";
 });
 calendarPageButton.addEventListener('click', () => {
     loadPage('index-calendar.html', "script-calendar.js", "calendarStyle", "calendarScript");
@@ -115,9 +160,9 @@ calendarPageButton.addEventListener('click', () => {
     calendarPageButton.style.fontSize = "2rem";
     calendarPageButton.style.transition = "font-size 0.5s ease-in-out";
     
-    tasksButtonContainer.style.order = "1";
-    calendarButtonContainer.style.order = "2";
-    weatherButtonContainer.style.order = "3";
+    tasksPageButton.style.order = "1";
+    calendarPageButton.style.order = "2";
+    weatherPageButton.style.order = "3";
 });
 
 });
