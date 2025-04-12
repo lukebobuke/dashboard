@@ -1,14 +1,12 @@
 taskScript();
 function taskScript() {
 
-    
-    
     // add to DOM and declare empty array of to-do items
-    let taskPlusButton = document.getElementById("taskPlusButton")
-    let todoForm = document.getElementById("todoForm")
-    let todoInput = document.getElementById("todoInput")
+    let plusButton = document.getElementById("plusButton")
+    let addForm = document.getElementById("addForm")
+    let addInput = document.getElementById("addInput")
     let addButton = document.getElementById("addButton")
-    let todoList = document.getElementById("todoList")
+    let mainList = document.getElementById("mainList")
     let todoArray = []
 
     // retrieve local storage of array of to-do items and display
@@ -19,19 +17,19 @@ function taskScript() {
 
     // add event listeners
 
-    taskPlusButton.addEventListener("click", (event) => {
-            expandTodoInput()
+    plusButton.addEventListener("click", (event) => {
+            expandaddInput()
         })
     addButton.addEventListener("click", addTodo)
     
     // clearButton.addEventListener("click", clearTodos)
 
-    todoInput.addEventListener('keydown', function(event) {
+    addInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             addTodo();
         }
     })
-    todoList.addEventListener("click", (event) => {
+    mainList.addEventListener("click", (event) => {
         if (event.target.matches(".editButton")) {
             editTodo(event.target.dataset.todoIndex)
         }
@@ -64,8 +62,8 @@ function taskScript() {
         console.log("prioritize function called at index " + prioritizedIndex)
     }
     function retrieveTodos() {
-        storedTodoArrayString = localStorage.getItem('todoArrayKey')
-        todoArray = JSON.parse(storedTodoArrayString)
+        const storedTodoArrayString = localStorage.getItem('todoArrayKey');
+        todoArray = JSON.parse(storedTodoArrayString) || []; // Ensure todoArray is an array
     }
     function checkTodo(checkedIndex) {
         if (todoArray[checkedIndex].checked == false){
@@ -79,16 +77,16 @@ function taskScript() {
         renderTodos()
         console.log("check function called at index " + checkedIndex)
     }
-    function expandTodoInput() {
-        taskPlusButton.style.display = "none"
-        todoForm.style.display = "flex"
+    function expandaddInput() {
+        plusButton.style.display = "none"
+        addForm.style.display = "flex"
         requestAnimationFrame(() => {
-            todoForm.style.width = "100%";
+            addForm.style.width = "100%";
         });
         setTimeout(() => {
             addButton.style.display = "block";
         }, 750);
-        todoInput.focus()
+        addInput.focus()
     }
     function renderTodos() {
         // retrieve array of todo items from local storage
@@ -101,11 +99,11 @@ function taskScript() {
                 return `<i data-todo-index=${i} class="fa-solid fa-circle-check checkMark"></i>`
             }
         }
-        function renderTodoText(i) {
+        function renderitemText(i) {
             if (todoArray[i].checked == false) {
-                return `<p data-todoindex = ${i} class="todoText">${todoArray[i].todoText}</p>`
+                return `<p data-todoindex = ${i} class="itemText">${todoArray[i].itemText}</p>`
             } else {
-                return `<p data-todoindex = ${i} class="todoText strikethrough">${todoArray[i].todoText}</p>`
+                return `<p data-todoindex = ${i} class="itemText strikethrough">${todoArray[i].itemText}</p>`
             }
         }
         function renderPriorityTag(i) {
@@ -116,15 +114,15 @@ function taskScript() {
             }
         }
         // create HTML for array of to do items
-        todoList.innerHTML = ""
+        mainList.innerHTML = ""
         newHTML = ""
         todoArray.forEach((todo, i) => {
             let newHTML = (
-                `<div class = todoItemContainer>
+                `<div class = listItemContainer>
                     ${renderCheckmarks(i)}
-                    <div data-todo-index=${i} class="todoItem">
+                    <div data-todo-index=${i} class="listItem border">
                         ${renderPriorityTag(i)}
-                        ${renderTodoText(i)}
+                        ${renderitemText(i)}
                         <div class="actions">
                             <i class="editButton fa-solid fa-pen" data-todo-index=${i}></i>
                             <i class="fa-solid fa-circle-exclamation prioritizeButton" data-todo-index=${i}></i>
@@ -133,41 +131,41 @@ function taskScript() {
                     </div>
                 </div>`
             )
-            todoList.innerHTML += newHTML
+            mainList.innerHTML += newHTML
         });
     }
     function addTodo(e) {
         // stop page from re-loading when add button is pressed
         e.preventDefault()
         // add input value to array
-        let todoObject = {todoText: todoInput.value, checked: false, prioritized: false}
+        let todoObject = {itemText: addInput.value, checked: false, prioritized: false}
         todoArray.push(todoObject)
         // store modified array of to-do items in local storage
         storeTodos()
         //reset HTML and re-write it for the new array
-        todoList.innerHtml = ""
-        todoInput.value = ""
+        mainList.innerHtml = ""
+        addInput.value = ""
         renderTodos()
         // confirm function called
         console.log("todo added at number " + todoArray.length + ": " + todoArray[(todoArray.length - 1)])
         console.log(todoArray)
         //switch display of plus button and todo form
-        todoForm.style.display = "none"
-        todoForm.style.width = 0
+        addForm.style.display = "none"
+        addForm.style.width = 0
         addButton.style.display = "none"
-        taskPlusButton.style.display = "block"
+        plusButton.style.display = "block"
     }
     function editTodo(editIndex) {
-        const todoItem = event.target.closest(".todoItem")
+        const listItem = event.target.closest(".listItem")
         const editInput = document.createElement("input")
-        editInput.classList.add("editInput")
+        editInput.classList.add("editInput", "accentBorder")
         editInput.type = "text"
-        editInput.value = todoItem.querySelector(".todoText").innerText
-        todoItem.replaceWith(editInput)
+        editInput.value = listItem.querySelector(".itemText").innerText
+        listItem.replaceWith(editInput)
         editInput.focus()
         console.log("editTodo at" + " " + editIndex)
         function saveEdit() {
-            todoArray[editIndex].todoText = editInput.value
+            todoArray[editIndex].itemText = editInput.value
             storeTodos()
             renderTodos()
             console.log("saved edits at index " + editIndex)
@@ -185,7 +183,7 @@ function taskScript() {
         // store modified array of to-do items in local storage
         storeTodos()
         //reset HTML and re-write it for the new array
-        todoList.innerHtml = ""
+        mainList.innerHtml = ""
         renderTodos()
         // confirm function was called and index was passed
         console.log("removeTodo at" + " " + removeIndex)

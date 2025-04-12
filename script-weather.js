@@ -3,10 +3,10 @@ function weatherScript() {
 
 
 
-const pinIcon = document.getElementById("pinIcon")
-const searchForm = document.getElementById("searchForm")
-const searchInput = document.getElementById("searchInput")
-const setButton = document.getElementById("setButton")
+const locationButton = document.getElementById("locationButton")
+const addForm = document.getElementById("addForm")
+const addInput = document.getElementById("addInput")
+const addButton = document.getElementById("addButton")
 const weatherButton = document.querySelectorAll(".weatherButton")
 const forecastDay = document.querySelectorAll(".forecastDay")
 const cityDisplay = document.getElementById("cityDisplay")
@@ -43,6 +43,7 @@ async function checkWeather() {
 
     document.querySelector("#nowTemp").innerHTML = `${Math.round(dataNow.main.temp)}°`
     displayIcons(dataNow.weather[0].icon, weatherNow)
+    weatherNow.querySelector("i").classList.add("largeIcon")
 
     const responseForecast = await fetch(apiURLForecast)
     if (!responseForecast.ok) {
@@ -110,7 +111,7 @@ function createSummary(){
 
 // EVENT LISTENERS
 
-pinIcon.addEventListener("click", (event) => {
+locationButton.addEventListener("click", (event) => {
     expandLocation()
 })
 // weatherButton.forEach(button => {
@@ -123,11 +124,11 @@ pinIcon.addEventListener("click", (event) => {
 //         descaleParent(event)
 //     })
 // })
-setButton.addEventListener("click", (event) => {
+addButton.addEventListener("click", (event) => {
     event.preventDefault()
     setLocation()
 })
-searchInput.addEventListener("keydown", (event) => {
+addInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         event.preventDefault()
         setLocation()
@@ -235,26 +236,26 @@ function displayPop(pop, id) {
     id.querySelector(".pop").innerText = pop + "%"
 }
 function expandLocation() {
-    pinIcon.style.display = "none"
+    locationButton.style.display = "none"
     cityDisplay.style.display = "none"
-    searchForm.style.display = "flex"
+    addForm.style.display = "flex"
     requestAnimationFrame(() => {
-        searchForm.style.width = "100%";
+        addForm.style.width = "100%";
     });
     setTimeout(() => {
-        setButton.style.display = "block";
+        addButton.style.display = "block";
     }, 750);
-    searchInput.focus()
+    addInput.focus()
 }
 function setLocation() {
-    city = searchInput.value
+    city = addInput.value
     cityDisplay.innerText = city
     checkWeather()
     console.log(city)
-    searchForm.style.display = "none"
-    searchForm.style.width = 0
-    setButton.style.display = "none"
-    pinIcon.style.display = "block"
+    addForm.style.display = "none"
+    addForm.style.width = 0
+    addButton.style.display = "none"
+    locationButton.style.display = "block"
     cityDisplay.style.display = "block"
 }
 function scaleParent(event) {

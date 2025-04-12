@@ -9,13 +9,13 @@ function calendarScript(){
 //////////////////////////////////////// VARIABLES ////////////////////////////////////////
 const eventPopup = document.getElementById("eventPopup");
 const eventDate = document.getElementById("eventDate");
-const eventList = document.getElementById("eventList");
+const mainList = document.getElementById("mainList");
 const closePopupButton = document.getElementById("closePopupButton");
 const plusButton = document.getElementById("plusButton");
 // const main = document.querySelector("main");
 const mainContainer = document.querySelector("#mainContainer");
 console.log(mainContainer);
-const eventForm = document.querySelector("#eventForm");
+const addForm = document.querySelector("#addForm");
 const gridContainer = document.getElementById("calendar-grid");
 const currentMonthElement = document.getElementById("current-month");
 let events = retrieveEvents(); // Retrieve events from local storage
@@ -52,15 +52,15 @@ closePopupButton.addEventListener("click", () => {
 });
 
 plusButton.addEventListener("click", () => {
-    expandInput(plusButton, eventForm);
+    expandInput(plusButton, addForm);
 });
 
-addEventButton.addEventListener("click", (event) => {
+addButton.addEventListener("click", (event) => {
     event.preventDefault(); // Prevent form submission
     createEvent();
 });
 
-eventList.addEventListener("click", (event) => {
+mainList.addEventListener("click", (event) => {
     if (event.target.classList.contains("fa-trash")) {
         deleteEvent(event);
     } else if (event.target.classList.contains("fa-pencil-alt")) {
@@ -121,7 +121,7 @@ function populateDays() {
             cell.insertBefore(dateSpan, dotContainer); // Insert the date number before the dot container
 
             if (dateNumber === today && currentMonthIndex === thisMonth) {
-                cell.classList.add('today');
+                cell.classList.add("today", "accentBorder"); // Highlight today's date
             }
         }
     }
@@ -136,7 +136,7 @@ function createGrid() {
     for (let row = 0; row < rows; row++) {
         for (let col = 0; col < columns; col++) {
             const cell = document.createElement('div');
-            cell.classList.add('grid-cell');
+            cell.classList.add("grid-cell", "border");
             gridContainer.appendChild(cell);
             const eventDotsContainer = document.createElement("div");
             eventDotsContainer.classList.add("event-dot-container");
@@ -152,13 +152,13 @@ function createGrid() {
 function displayEvents(date) {
     console.log("Displaying events for date:", date);
     console.log("Events object:", events);
-    eventList.innerHTML = ''; // Clear previous events
+    mainList.innerHTML = ''; // Clear previous events
     if (events[date]) {
         events[date].forEach((evt) => {
-            const eventItemContainer = `
-                <div class="eventItemContainer">   
-                    <div class="eventItem">
-                        <p class="event-text">${evt}</p>
+            const listItemContainer = `
+                <div class="listItemContainer">   
+                    <div class="listItem border">
+                        <p class="itemText">${evt}</p>
                         <div class="actions">
                             <i class="fas fa-trash"></i>
                             <i class="fas fa-pencil-alt"></i>
@@ -166,20 +166,20 @@ function displayEvents(date) {
                     </div>
                 </div>
             `;
-            eventList.insertAdjacentHTML('beforeend', eventItemContainer);
+            mainList.insertAdjacentHTML('beforeend', listItemContainer);
         });
     } else {
-        const noEventText = `
-            <p class="event-text">No events</p>
+        const noitemText = `
+            <p class="itemText">No events</p>
         `;
-        eventList.insertAdjacentHTML('beforeend', noEventText);
-        eventList.style.alignItems = "center";
+        mainList.insertAdjacentHTML('beforeend', noitemText);
+        mainList.style.alignItems = "center";
     }
 }
 function createEvent() {
-    const eventInput = eventForm.querySelector("input");
+    const addInput = addForm.querySelector("input");
     const date = eventDate.dataset.date;
-    const eventName = eventInput.value.trim();
+    const eventName = addInput.value.trim();
     
     if (eventName) {
         if (!events[date]) {
@@ -190,15 +190,15 @@ function createEvent() {
         displayEvents(date);
         updateEventDots();
     }
-    eventInput.value = ""; // Clear the input field after adding the event
+    addInput.value = ""; // Clear the input field after adding the event
     plusButton.style.display = "block";
-    eventForm.style.display = "none";
+    addForm.style.display = "none";
 }
 function deleteEvent(event) {
     const trashIcon = event.target;
-    const eventItemContainer = trashIcon.closest(".eventItemContainer");
+    const listItemContainer = trashIcon.closest(".listItemContainer");
     const date = eventDate.dataset.date;
-    const index = Array.from(eventList.children).indexOf(eventItemContainer);
+    const index = Array.from(mainList.children).indexOf(listItemContainer);
     events[date].splice(index, 1);
     if (events[date].length === 0) {
         delete events[date];
@@ -208,14 +208,14 @@ function deleteEvent(event) {
     updateEventDots();
 }
 function editEvent(event) {
-    const eventItemContainer = event.target.closest(".eventItemContainer");
-    const editIndex = Array.from(eventList.children).indexOf(eventItemContainer);
-    const eventItem = eventItemContainer.querySelector(".eventItem");
+    const listItemContainer = event.target.closest(".listItemContainer");
+    const editIndex = Array.from(mainList.children).indexOf(listItemContainer);
+    const listItem = listItemContainer.querySelector(".listItem");
     const editInput = document.createElement("input")
-    editInput.classList.add("editInput")
+    editInput.classList.add("editInput", "accentBorder")
     editInput.type = "text"
-    editInput.value = eventItem.querySelector(".event-text").innerText
-    eventItem.replaceWith(editInput)
+    editInput.value = listItem.querySelector(".itemText").innerText
+    listItem.replaceWith(editInput)
     editInput.focus()
     console.log("editEvent at" + " " + editIndex)
     const date = eventDate.dataset.date;

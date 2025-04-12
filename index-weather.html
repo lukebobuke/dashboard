@@ -13,60 +13,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         #topContainer {
-            display: flex;
             flex-direction: row;
-            align-items: center;
-            gap: 1rem;
-            position: relative;
-        } 
-        #pinIcon {
-            font-size: 2rem;
-            /* position: absolute; */
-        }
-        #cityDisplay {
-            text-transform: uppercase;
-        }
-        #searchForm {
-            display: none;
-            width: 0;
-            transition: width 750ms ease-in-out;
-            flex-direction: row;
-            height: 4rem;
-            border-style: solid;
-            border-width: var(--borderWidth);
-            border-color: var(--accentColor);
-            border-radius: var(--borderRadius);
-            overflow: hidden;
-        }
-        #searchInput {
-            flex: 1;
-            border: none;
-            padding-left: .5rem;
-            padding-right: .5rem;
-            min-width: 0px;
-            background-color: transparent;
-            color: var(--accentColor);
-            outline: none;
-            font-size: 1.5rem;
-        }
-        #setButton {
-            display: none;
         }
         #weatherNow {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: .5rem;
-            font-size: 1.5rem;
             transition: transform 1000ms ease;
             padding: 1rem;
             margin-bottom: 1rem;
-            border: solid;
-            border-radius: var(--borderRadius);
-            border-width: var(--borderWidth);
+            font-weight: bold;
         }
-        #weatherNow i {
-            font-size: 3rem;
+        #weatherNow > p {
+            font-size: 1.5rem;
+            font-weight: normal;
         }
         #weatherFiveDay {
             display: flex;
@@ -75,9 +36,6 @@
             width: 100%;
             padding: 1rem;
             margin: 1rem;
-            border: solid;
-            border-radius: var(--borderRadius);
-            border-width: var(--borderWidth);
         }
         #weatherFiveDay > div {
             display: flex;
@@ -87,49 +45,44 @@
             gap: .75rem;
             transition: transform 1000ms ease;
         }
-        .weatherButton {
-            font-size: 2rem;
-        }
         .weatherButton:hover {
             cursor: unset;
             transform: unset;
             color: unset;
         }
-        .day {
-            font-weight: bold;
-            font-size: 1rem;
+        .dayName {
+            font-size: 1.2rem;
+            text-transform: uppercase;
         }
         .popIcon {
-            font-size: 1rem;
+            font-size: .75rem;
         }
         .popContainer {
             display: flex;
             flex-direction: row;
             gap: .25rem;
-        }
-        .popContainer * {
-            font-size: .75rem;
+            align-items: center;
         }
     </style>
 </head>
 <body>
     <main>
         <div id="topContainer">
-            <i id="pinIcon" class="show fa-solid fa-location-dot"></i>
+            <i id="locationButton" class="fa-solid fa-location-dot largeIcon"></i>
             <h2 id = "cityDisplay">City failed to Load</h2>
-            <form id="searchForm" class = "hide">
-                <input id="searchInput" placeholder="enter city">
-                <button id="setButton" type="button">SET</button>
+            <form id="addForm" class = "hide accentBorder">
+                <input id="addInput" placeholder="enter city">
+                <button id="addButton" type="button">SET</button>
             </form>
         </div>
-        <div id = "weatherNow">
+        <div id = "weatherNow" class="border">
             <p>NOW</p>
-            <i class="weatherButton fa-solid fa-sun" tabindex="0"></i>
+            <i class="weatherButton fa-solid fa-sun largeIcon" tabindex="0"></i>
             <p id="nowTemp">_</p>
         </div>
         <!-- <div id = "weatherHourly">
         </div> -->
-        <div id = "weatherFiveDay">
+        <div id = "weatherFiveDay" class="border">
             <div id = "dayOne" class = "forecastDay">
                 <p class="dayName">M</p>
                 <i class="weatherButton fa-solid fa-sun" tabindex="0"></i>
