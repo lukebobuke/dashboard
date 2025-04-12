@@ -190,11 +190,6 @@ function taskScript() {
         // confirm function was called and index was passed
         console.log("removeTodo at" + " " + removeIndex)
     }
-    function clearTodos() {
-        todoArray = []
-        storeTodos()
-        renderTodos()
-    }
     renderTodos()
 
 }

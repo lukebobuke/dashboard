@@ -44,7 +44,6 @@
         #todoList {
             display: flex;
             flex-direction: column;
-            width: 100%;
             gap: 1rem;
         }
         .todoItemContainer {
@@ -74,8 +73,12 @@
             overflow: hidden;
             height: 100%;
         }
-        .todoItem {
-            height: 100%;
+        .editInput {
+            outline: none;
+            border-style: solid;
+            border-color: var(--accentColor);
+            color: var(--accentColor);
+            padding-left: var(--defaultPadding);
         }
         .priorityTag {
             height: 100%;
@@ -90,28 +93,6 @@
         }
         .priorityTag.prioritized {
             background-color: var(--accentColor);
-        }
-        .editInput {
-            padding-left: 2rem;
-            /* width: 100%; */
-            /* field-sizing: inherit; */
-        }
-        .strikethrough {
-            text-decoration: line-through;
-        }
-        i {
-            color: var(--textColor);
-        }
-        i:hover {
-            color: var(--accentColor);
-            cursor: pointer;
-            transform: scale(1.2);
-        }
-        .editInput {
-            outline: none;
-            border-style: solid;
-            border-color: var(--accentColor);
-            color: var(--accentColor);
         }
     </style>
 </head>

@@ -74,7 +74,7 @@
             left: var(--defaultPadding);
             width: calc(100% - calc(2 * var(--defaultPadding)));
             background-color: var(--mainColor);
-            border: 2px solid var(--accentColor);
+            border: 2px solid var(--textColor);
             border-radius: var(--borderRadius);
             padding: 1rem;
             flex-direction: column;
@@ -87,14 +87,12 @@
             flex-direction: column;
             gap: 1rem;
         }
-        .popupEventContainer {
+        .eventItemContainer {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 0.5rem;
-            flex-direction: row;
-            flex: 1;
+            position: relative;
+            align-items: center;      
+            height: fit-content;  
+            min-height: 3rem;
         }
         .event-icons {
             display: flex;
@@ -102,6 +100,8 @@
             flex-direction: row;
         }
         .event-text {
+            flex: 1;
+            overflow: hidden;
             text-align: left;
         }
         .event-dot-container {
@@ -219,7 +219,31 @@
             outline: none;
             font-size: 1.5rem;
         }
-
+        .eventItem,
+        .editInput {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            gap: 1rem;
+            font-size: 1rem;
+            border-width: var(--borderWidth);
+            border-style: solid;
+            border-radius: var(--borderRadius);
+            align-items: center;
+            background: transparent;
+            padding-right: 1rem;
+            overflow: hidden;
+            height: 100%;
+            padding-left: var(--defaultPadding);
+        }
+        .editInput {
+            outline: none;
+            border-style: solid;
+            border-color: var(--accentColor);
+            color: var(--accentColor);
+            padding-left: var(--defaultPadding);
+            height: 3rem;
+        }
     </style>
 </head>
 <body>

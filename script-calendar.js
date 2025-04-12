@@ -155,16 +155,18 @@ function displayEvents(date) {
     eventList.innerHTML = ''; // Clear previous events
     if (events[date]) {
         events[date].forEach((evt) => {
-            const popupEventContainer = `
-                <div class="popupEventContainer">
-                    <p class="event-text">${evt}</p>
-                    <div class="actions">
-                        <i class="fas fa-trash"></i>
-                        <i class="fas fa-pencil-alt"></i>
+            const eventItemContainer = `
+                <div class="eventItemContainer">   
+                    <div class="eventItem">
+                        <p class="event-text">${evt}</p>
+                        <div class="actions">
+                            <i class="fas fa-trash"></i>
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
                     </div>
                 </div>
             `;
-            eventList.insertAdjacentHTML('beforeend', popupEventContainer);
+            eventList.insertAdjacentHTML('beforeend', eventItemContainer);
         });
     } else {
         const noEventText = `
@@ -194,9 +196,9 @@ function createEvent() {
 }
 function deleteEvent(event) {
     const trashIcon = event.target;
-    const popupEventContainer = trashIcon.closest(".popupEventContainer");
+    const eventItemContainer = trashIcon.closest(".eventItemContainer");
     const date = eventDate.dataset.date;
-    const index = Array.from(eventList.children).indexOf(popupEventContainer);
+    const index = Array.from(eventList.children).indexOf(eventItemContainer);
     events[date].splice(index, 1);
     if (events[date].length === 0) {
         delete events[date];
@@ -206,16 +208,29 @@ function deleteEvent(event) {
     updateEventDots();
 }
 function editEvent(event) {
-    const pencilIcon = event.target;
-    const popupEventContainer = pencilIcon.closest(".popupEventContainer");
+    const eventItemContainer = event.target.closest(".eventItemContainer");
+    const editIndex = Array.from(eventList.children).indexOf(eventItemContainer);
+    const eventItem = eventItemContainer.querySelector(".eventItem");
+    const editInput = document.createElement("input")
+    editInput.classList.add("editInput")
+    editInput.type = "text"
+    editInput.value = eventItem.querySelector(".event-text").innerText
+    eventItem.replaceWith(editInput)
+    editInput.focus()
+    console.log("editEvent at" + " " + editIndex)
     const date = eventDate.dataset.date;
-    const index = Array.from(eventList.children).indexOf(popupEventContainer);
-    const newEventName = prompt("Edit event name:", events[date][index]);
-    if (newEventName) {
-        events[date][index] = newEventName;
-        storeEvents(); // Store updated events in local storage
-        displayEvents(date);
+    function saveEdit() {
+        events[date][editIndex] = editInput.value
+        storeEvents()
+        displayEvents(date)
+        console.log("saved edits at index " + editIndex)
     }
+    editInput.addEventListener("blur", saveEdit)
+    editInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            saveEdit()
+        }
+    })
 }
 
 // UI UPDATE FUNCTIONS
