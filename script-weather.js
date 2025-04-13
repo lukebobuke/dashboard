@@ -86,7 +86,7 @@ function weatherScript() {
                 icon: item.weather[0].icon, 
                 pop: item.pop * 100 // Precipitation probability
             };
-
+            console.log(item.pop)
             if (!forecastArray[date]) {
                 forecastArray[date] = []; // Initialize an array for the date
             }
@@ -102,7 +102,7 @@ function weatherScript() {
                 temps.push(item.temperature);
                 pops.push(item.pop);
             });
-            let dayHour = forecastArray[date].find(item => item.time === "12:00:00"); // Find midday data
+            let dayHour = forecastArray[date][5];
             let dayIcon = dayHour ? dayHour.icon : undefined;
             return {
                 date,
@@ -150,61 +150,63 @@ function weatherScript() {
 
     // Display weather icons
     function displayIcons(iconKey, id) {
-        id.querySelector("i").className = ""; // Clear existing icon classes
+        const iconElement = id.querySelector("i");
+        iconElement.className = "weatherButton"; // Reset to base class only
+
         switch (iconKey) {
             case "01d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-sun";
+                iconElement.classList.add("fa-solid", "fa-sun");
                 break;
             case "02d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-sun";
+                iconElement.classList.add("fa-solid", "fa-cloud-sun");
                 break;
             case "03d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                iconElement.classList.add("fa-solid", "fa-cloud");
                 break;
             case "04d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                iconElement.classList.add("fa-solid", "fa-cloud");
                 break;
             case "09d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers");
                 break;
             case "10d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers-heavy");
                 break;
             case "11d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers-heavy");
                 break; 
             case "13d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-snowflake";
+                iconElement.classList.add("fa-solid", "fa-snowflake");
                 break;  
             case "50d": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers");
                 break;     
             case "01n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-moon";
+                iconElement.classList.add("fa-solid", "fa-moon");
                 break;
             case "02n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-moon";
+                iconElement.classList.add("fa-solid", "fa-cloud-moon");
                 break;
             case "03n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                iconElement.classList.add("fa-solid", "fa-cloud");
                 break;
             case "04n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud";
+                iconElement.classList.add("fa-solid", "fa-cloud");
                 break;
             case "09n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers");
                 break;
             case "10n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers-heavy");
                 break;
             case "11n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers-heavy";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers-heavy");
                 break; 
             case "13n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-snowflake";
+                iconElement.classList.add("fa-solid", "fa-snowflake");
                 break;  
             case "50n": 
-                id.querySelector("i").className = "weatherButton fa-solid fa-cloud-showers";
+                iconElement.classList.add("fa-solid", "fa-cloud-showers");
                 break;  
         }
     }
