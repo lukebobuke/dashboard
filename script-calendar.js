@@ -14,7 +14,6 @@ const closePopupButton = document.getElementById("closePopupButton");
 const plusButton = document.getElementById("plusButton");
 // const main = document.querySelector("main");
 const mainContainer = document.querySelector("#mainContainer");
-console.log(mainContainer);
 const addForm = document.querySelector("#addForm");
 const gridContainer = document.getElementById("calendar-grid");
 const currentMonthElement = document.getElementById("current-month");
